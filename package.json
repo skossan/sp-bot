@@ -1,0 +1,19 @@
+{
+  "name": "sp-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rasmuselmgren/sp-bot.git",
+  "author": "Stefan Generalao",
+  "license": "MIT",
+  "dependencies": {
+    "@discordjs/builders": "^0.5.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "axios": "^0.21.1",
+    "discord-api-types": "^0.22.0",
+    "discord.js": "^13.1.0",
+    "nodemon": "^2.0.12"
+  },
+  "scripts": {
+    "start": "nodemon src"
+  }
+}
