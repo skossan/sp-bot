@@ -1,5 +1,5 @@
-const { Client, Intents } = require("discord.js");
-const { token } = require("../config.json");
+import { Client, Intents } from "discord.js";
+import { token } from "../config.json";
 
 const messageCreateCallbacks = {};
 
@@ -28,4 +28,4 @@ addMessageCreateEvent = (messageKey, callback) => {
   messageCreateCallbacks[messageKey] = callback;
 };
 
-module.exports = addMessageCreateEvent;
+export default addMessageCreateEvent;
