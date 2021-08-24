@@ -1,5 +1,5 @@
-const axios = require("axios");
-const addMessageCreateEvent = require("./addMessageCreateEvent");
+import axios from "axios";
+import addMessageCreateEvent from "./addMessageCreateEvent";
 
 addMessageCreateEvent("baba", () => "nana");
 addMessageCreateEvent("sping", () => "spong");
