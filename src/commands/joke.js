@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const messageKeyJoke = "joke";
+export const messageKey = "joke";
 
-export const callbackJoke = async () => {
+export const callback = async () => {
   const joke = await axios.get(
     "https://official-joke-api.appspot.com/random_joke"
   );
