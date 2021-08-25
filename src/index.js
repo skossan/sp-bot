@@ -1,14 +1,10 @@
 import axios from "axios";
 import addMessageCreateEvent from "./addMessageCreateEvent";
+import { messageKeyPear, callbackPear } from "./commands/pear.js";
+import { messageKeyJoke, callbackJoke } from "./commands/joke.js";
 
-addMessageCreateEvent("baba", () => "nana");
-addMessageCreateEvent("sping", () => "spong");
-addMessageCreateEvent("sjoke", async () => {
-  const joke = await axios.get(
-    "https://official-joke-api.appspot.com/random_joke"
-  );
+addMessageCreateEvent(messageKeyPear, callbackPear);
+addMessageCreateEvent(messageKeyJoke, callbackJoke);
 
-  return `${joke.data.setup}\n${joke.data.punchline}`;
-});
 addMessageCreateEvent("banana", () => "apple");
 addMessageCreateEvent("who am I", (msg) => msg.author.username);
