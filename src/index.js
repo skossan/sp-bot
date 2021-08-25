@@ -1,14 +1,14 @@
-import axios from "axios";
-import addMessageCreateEvent from "./addMessageCreateEvent";
+import axios from 'axios';
+import addMessageCreateEvent from './addMessageCreateEvent';
 
-addMessageCreateEvent("baba", () => "nana");
-addMessageCreateEvent("sping", () => "spong");
-addMessageCreateEvent("sjoke", async () => {
+addMessageCreateEvent('baba', () => 'nana');
+addMessageCreateEvent('sping', () => 'spong');
+addMessageCreateEvent('sjoke', async () => {
   const joke = await axios.get(
-    "https://official-joke-api.appspot.com/random_joke"
+    'https://official-joke-api.appspot.com/random_joke'
   );
 
   return `${joke.data.setup}\n${joke.data.punchline}`;
 });
-addMessageCreateEvent("banana", () => "apple");
-addMessageCreateEvent("who am I", (msg) => msg.author.username);
+addMessageCreateEvent('banana', () => 'apple');
+addMessageCreateEvent('who am I', (msg) => msg.author.username);
