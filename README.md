@@ -9,7 +9,7 @@ If you are interested you can join the discord server via this [link](https://di
 
 ## Installation
 
-Clone the repo and then execute the following command:
+Clone the repo and then execute the following commands:
 ```bash
 npm install
 npm run start
@@ -17,11 +17,11 @@ npm run start
 
 
 ## Adding commands
-If you want to add new command to the bot you are required to follow the file/command structure.
+If you want to add new commands to the bot you are *required* to follow the file/command structure.
 
 1. Create a `.js` file in the commands folder. The name of the file should be the name of the command.
 2. Export a `messageKey` and a `callback` function inside the file (see the other files for examples).
-3. Be sure to export your file in side the `index.js` file located in `./commands/index.js`.
+3. Be sure to export your file inside the `index.js` file located in `./commands/index.js`.
 
 
 ## Contributing
