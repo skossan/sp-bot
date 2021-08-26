@@ -8,14 +8,16 @@ const allowList = [
   'Marcus Rådell#9442',
 ];
 
-export const callback = (message) => {
+export const callback = async (message) => {
   const { tag } = message.author;
 
   if (!allowList.includes(tag)) {
     return '❌ Please open a PR to the SP-Bot repo with your Discord tag (username#dicriminator) to get access to this command.';
   }
 
-  message.author.send('```\n' + JSON.stringify(config, null, 2) + '```\n');
+  const dmChannel = await message.author.createDM();
+
+  dmChannel.send('```\n' + JSON.stringify(config, null, 2) + '```\n');
 
   return '👍 Check your DMs!';
 };
