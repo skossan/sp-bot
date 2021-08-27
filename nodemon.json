@@ -1,4 +1,4 @@
 {
   "watch": ["src"],
-  "exec": "npm run build && node dist"
+  "exec": "npm run build && NODE_ENV=development node -r dotenv/config dist"
 }
