@@ -1,3 +1,3 @@
-export const messageKey = "pear";
+export const messageKey = '!pear';
 
-export const callback = () => "pair??";
+export const callback = () => 'pair??';

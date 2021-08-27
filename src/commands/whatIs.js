@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const messageKey = 'what is';
+export const messageKey = '!what is';
 
 export const callback = async (msg) => {
   const messageContent = msg.content.toLowerCase();
