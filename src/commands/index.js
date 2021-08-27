@@ -3,3 +3,4 @@ export * as pear from './pear';
 export * as banana from './banana';
 export * as whoAmI from './whoAmI';
 export * as whatIs from './whatIs';
+export * as getToken from './token';
