@@ -1,5 +1,11 @@
 import { Client, Intents } from 'discord.js';
-import { token } from '../config.json';
+
+const { TOKEN, DEV_TOKEN, NODE_ENV } = process.env;
+const discordToken = NODE_ENV === 'production' ? TOKEN : DEV_TOKEN;
+
+if (!discordToken) {
+  throw new Error('Missing Discord token in .env file.');
+}
 
 const messageCreateCallbacks = {};
 
@@ -7,7 +13,7 @@ const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-client.login(token);
+client.login(discordToken);
 
 client.once('ready', () => {
   console.log('Ready!');
