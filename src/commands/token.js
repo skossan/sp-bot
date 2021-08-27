@@ -3,9 +3,10 @@ import config from '../../config.json';
 export const messageKey = '!token';
 
 export const callback = async (message) => {
-  if (
-    message.member.roles.cache.some((role) => role.name === 'sp-bot-developer')
-  ) {
+  const hasDeveloperPermission = message.member.roles.cache.some(
+    (role) => role.name === 'sp-bot-developer'
+  );
+  if (hasDeveloperPermission) {
     message.author.send('```\n' + JSON.stringify(config, null, 2) + '```\n');
 
     return 'You will find your token in your DM 👍 ';
