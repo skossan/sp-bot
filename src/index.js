@@ -1,6 +1,3 @@
-import addMessageCreateEvent from './addMessageCreateEvent';
-import * as commands from './commands';
+import discordClientInit from './discordClientInit';
 
-Object.values(commands).forEach(({ messageKey, callback }) =>
-  addMessageCreateEvent(messageKey, callback)
-);
+discordClientInit();

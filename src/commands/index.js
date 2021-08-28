@@ -1,6 +1,16 @@
-export * as joke from './joke';
-export * as pear from './pear';
-export * as banana from './banana';
-export * as whoAmI from './whoAmI';
-export * as whatIs from './whatIs';
-export * as token from './token';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import * as joke from './joke';
+import * as pear from './pear';
+import * as banana from './banana';
+import * as whoAmI from './whoAmI';
+import * as whatIs from './whatIs';
+import * as token from './token';
+
+export default [joke, pear, banana, whoAmI, whatIs, token].map(
+  ({ messageKey, callback, description }) => ({
+    command: new SlashCommandBuilder()
+      .setName(messageKey)
+      .setDescription(description),
+    callback,
+  })
+);
