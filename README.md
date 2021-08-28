@@ -20,8 +20,8 @@ npm run start
 If you want to add new commands to the bot you are *required* to follow the file/command structure.
 
 1. Create a `.js` file in the commands folder. The name of the file should be the name of the command.
-2. Export a `messageKey` and a `callback` function inside the file (see the other files for examples).
-3. Be sure to export your file inside the `index.js` file located in `./commands/index.js`.
+2. Export a `messageKey`, `description` and a `callback` function inside the file (see the other files for examples).
+3. Be sure to export your file inside the `index.js` file located in `./commands/index.js` and make sure that you add the file to the array.
 
 
 ## Contributing
