@@ -1,10 +1,10 @@
 const { DEV_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
 
-export const messageKey = 'token';
+const name = 'token';
 
-export const description = 'Will DM you a bot developer credentials';
+const description = 'Will DM you a bot developer credentials';
 
-export const callback = (interaction) => {
+const callback = (interaction) => {
   const hasDeveloperPermission = interaction.member.roles.cache.some(
     (role) => role.name === 'sp-bot-developer'
   );
@@ -18,3 +18,11 @@ export const callback = (interaction) => {
     return `You don't seem to have the correct role. Please contact an admin if you want to work on the project and get developer credentials.`;
   }
 };
+
+const token = {
+  name,
+  description,
+  callback,
+};
+
+export default token;

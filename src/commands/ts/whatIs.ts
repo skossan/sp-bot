@@ -1,12 +1,16 @@
 import axios from 'axios';
+import { ApplicationCommandOptionType } from 'discord-api-types/v9';
+import { Interaction } from 'discord.js';
+import { ICommand, IOption } from '../commands';
 
-export const messageKey = 'whatis';
+const name = 'whatis';
 
-export const description =
-  'Responds with an Urban Dictionary definition of a word';
+const description = 'Responds with an Urban Dictionary definition of a word';
 
-export const callback = async (interaction) => {
+const callback = async (interaction: Interaction) => {
   try {
+    if (!interaction.isCommand()) return;
+
     const term = interaction.options.get('word').value;
 
     if (!term) {
@@ -24,7 +28,7 @@ export const callback = async (interaction) => {
 
     const [{ definition, permalink }] = definitionsList;
 
-    const cleanedDefinition = definition.replace(/[\[\]]/g, '');
+    const cleanedDefinition = definition.replace(/[\[\]]/g, '') as string;
 
     return [cleanedDefinition, `Source: ${permalink}`];
   } catch (e) {
@@ -33,11 +37,20 @@ export const callback = async (interaction) => {
   }
 };
 
-export const options = [
+const options: IOption[] = [
   {
-    type: 3,
+    type: ApplicationCommandOptionType.String,
     name: 'word',
     description: 'What is this word?',
     required: true,
   },
 ];
+
+const whatIs = {
+  callback,
+  description,
+  name,
+  options,
+};
+
+export default whatIs;
