@@ -2,7 +2,7 @@ const name = 'whoami';
 
 const description = 'Responds with your username';
 
-const callback = (msg) => msg.author.username;
+const callback = (interaction) => interaction.author.username;
 
 const whoAmI = {
   name,

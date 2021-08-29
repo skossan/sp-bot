@@ -8,7 +8,7 @@ import { ICommand } from './commands';
 
 const tsCommands: ICommand[] = [joke, banana, whatIs, token];
 
-const jsCommands = [pear, whoAmI];
+const jsCommands: ICommand[] = [pear, whoAmI];
 
 const allCommands = [...tsCommands, ...jsCommands];
 
