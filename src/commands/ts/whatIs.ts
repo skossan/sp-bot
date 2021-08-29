@@ -9,9 +9,9 @@ const description = 'Responds with an Urban Dictionary definition of a word';
 
 const callback = async (interaction: Interaction) => {
   try {
-    if (!interaction.isCommand()) return;
+    if (!interaction.isCommand()) throw new Error('Not a command.');
 
-    const term = interaction.options.get('word').value;
+    const term = interaction.options.get('word')!.value;
 
     if (!term) {
       return 'Write a word after "what is". For example: "what is banana".';
