@@ -1,0 +1,14 @@
+[Unit]
+Description=Svensk programmering Discord bot
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/node /home/pi/sp-bot/dist
+WorkingDirectory=/home/pi/sp-bot
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
