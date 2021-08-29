@@ -1,10 +1,13 @@
 import axios from 'axios';
 
-export const messageKey = 'what is';
+export const messageKey = 'whatis';
+
+export const description =
+  'Responds with an Urban Dictionary definition of a word';
 
 export const callback = async (msg) => {
   const messageContent = msg.content.toLowerCase();
-  const term = messageContent.split('what is')[1].trim();
+  const term = messageContent.split('whatis')[1].trim();
 
   if (!term) {
     return 'Write a word after "what is". For example: "what is banana".';
