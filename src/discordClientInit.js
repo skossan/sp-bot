@@ -30,8 +30,9 @@ const registerDiscordCommands = () =>
       console.log('Attempting to register application commands...');
 
       const rest = new REST({ version: '9' }).setToken(DISCORD_CLIENT_TOKEN);
+      const body = commands.map(({ command }) => command);
       await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
-        body: commands.map(({ command }) => command.toJSON()),
+        body,
       });
 
       console.log('✅ Successfully registered application commands!');
@@ -41,6 +42,39 @@ const registerDiscordCommands = () =>
       reject();
     }
   });
+
+const onInteractionCreate = async (interaction) => {
+  const command = commands.find(
+    ({ command }) => command.name === interaction.commandName
+  );
+
+  if (!command) {
+    interaction.reply('Failed to find command 🙃');
+    return;
+  }
+
+  await interaction.deferReply();
+  const commandResult = await command.callback(interaction);
+
+  if (!commandResult) {
+    interaction.reply('Empty reply 🙃');
+    return;
+  }
+
+  try {
+    if (Array.isArray(commandResult)) {
+      const [firstReply, ...restReplies] = commandResult;
+      await interaction.editReply(firstReply);
+      await Promise.all(
+        restReplies.map(async (reply) => await interaction.followUp(reply))
+      );
+    } else {
+      await interaction.editReply(commandResult);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 const loginDiscordClient = () =>
   new Promise((resolve, reject) => {
@@ -57,25 +91,7 @@ const loginDiscordClient = () =>
         resolve();
       });
 
-      client.on('interactionCreate', async (interaction) => {
-        const command = commands.find(
-          ({ command }) => command.name === interaction.commandName
-        );
-
-        if (!command) {
-          interaction.reply('Failed to find command 🙃');
-          return;
-        }
-
-        const reply = await command.callback(interaction);
-
-        if (!reply) {
-          interaction.reply('Empty reply 🙃');
-          return;
-        }
-
-        interaction.reply(reply);
-      });
+      client.on('interactionCreate', onInteractionCreate);
     } catch (error) {
       console.error(error);
       reject();
