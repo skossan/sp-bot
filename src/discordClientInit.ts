@@ -3,14 +3,17 @@ import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import commands from './commands';
 
-const { CLIENT_ID, GUILD_ID, DEV_TOKEN, PROD_TOKEN, NODE_ENV } = process.env;
+const {
+  DEV_CLIENT_ID,
+  GUILD_ID,
+  DEV_TOKEN,
+  PROD_TOKEN,
+  PROD_CLIENT_ID,
+  NODE_ENV,
+} = process.env;
 
 if (!GUILD_ID) {
   throw new Error('GUILD_ID missing in .env file.');
-}
-
-if (!CLIENT_ID) {
-  throw new Error('CLIENT_ID missing in .env file.');
 }
 
 const DISCORD_CLIENT_TOKEN = (() => {
@@ -29,6 +32,22 @@ const DISCORD_CLIENT_TOKEN = (() => {
   }
 })();
 
+const DISCORD_CLIENT_ID = (() => {
+  if (NODE_ENV === 'production') {
+    if (PROD_CLIENT_ID) {
+      return PROD_CLIENT_ID;
+    } else {
+      throw new Error('Missing PROD_CLIENT_ID in .env file.');
+    }
+  }
+
+  if (DEV_CLIENT_ID) {
+    return DEV_CLIENT_ID;
+  } else {
+    throw new Error('DEV_CLIENT_ID missing in .env file.');
+  }
+})();
+
 const registerDiscordCommands = async () => {
   console.log('Attempting to register application commands...');
 
@@ -36,7 +55,7 @@ const registerDiscordCommands = async () => {
 
   // TODO: Why does this fail?!
   // @ts-ignore
-  await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
+  await rest.put(Routes.applicationGuildCommands(DISCORD_CLIENT_ID, GUILD_ID), {
     body: commands.map(({ command }) => command),
   });
 
