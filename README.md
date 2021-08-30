@@ -20,6 +20,8 @@ npm run start
 
 You are free to add commands in either `TypeScript` or `JavaScript` but do make sure you follow the command structure. You can see examples of both command types in the respective folders.
 
+If you encounter any problems feel free to ask in the `sp-bot-snack` discord channel.
+
 ## Contributing
 
 Contributions are always welcome.
