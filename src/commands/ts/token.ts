@@ -1,6 +1,6 @@
 import { Interaction } from 'discord.js';
 
-const { DEV_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
+const { DEV_TOKEN, DEV_CLIENT_ID, GUILD_ID } = process.env;
 
 const name = 'token';
 
@@ -18,7 +18,7 @@ const callback = (interaction: Interaction) => {
 
     if (hasDeveloperPermission) {
       interaction.user.send(
-        `Execute the following command in the root of the project folder:\n\`\`\`echo "\\nDEV_TOKEN=${DEV_TOKEN} \\\n\\nGUILD_ID=${GUILD_ID} \\\n\\nCLIENT_ID=${CLIENT_ID}" >> .env\`\`\``
+        `Execute the following command in the root of the project folder:\n\`\`\`echo "\\nDEV_TOKEN=${DEV_TOKEN} \\\n\\nGUILD_ID=${GUILD_ID} \\\n\\nDEV_CLIENT_ID=${DEV_CLIENT_ID}" >> .env\`\`\``
       );
 
       return 'You will find your developer credentials in your DM 👍 ';

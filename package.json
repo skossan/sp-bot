@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "nodemon",
-    "build": "esbuild src/index.ts --bundle --platform=node --outdir=dist --external:discord.js"
+    "build": "esbuild src/index.ts --bundle --platform=node --outdir=dist --external:discord.js",
+    "start:prod": "NODE_ENV=production node -r dotenv/config dist"
   }
 }
