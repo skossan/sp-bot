@@ -1,4 +1,5 @@
 {
   "watch": ["src"],
-  "exec": "npm run build && NODE_ENV=development node -r dotenv/config dist"
+  "exec": "tsc -noEmit && npm run build && NODE_ENV=development node -r dotenv/config dist",
+  "ext": "ts, js"
 }

@@ -1,20 +1,9 @@
-import { Client, Intents } from 'discord.js';
+import { Client, Intents, Interaction } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import commands from './commands';
 
 const { CLIENT_ID, GUILD_ID, DEV_TOKEN, PROD_TOKEN, NODE_ENV } = process.env;
-const DISCORD_CLIENT_TOKEN = NODE_ENV === 'production' ? PROD_TOKEN : DEV_TOKEN;
-
-if (NODE_ENV === 'production') {
-  if (!PROD_TOKEN) {
-    throw new Error('PROD_TOKEN missing in .env file.');
-  }
-} else {
-  if (!DEV_TOKEN) {
-    throw new Error('DEV_TOKEN missing in .env file.');
-  }
-}
 
 if (!GUILD_ID) {
   throw new Error('GUILD_ID missing in .env file.');
@@ -24,26 +13,41 @@ if (!CLIENT_ID) {
   throw new Error('CLIENT_ID missing in .env file.');
 }
 
-const registerDiscordCommands = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-      console.log('Attempting to register application commands...');
-
-      const rest = new REST({ version: '9' }).setToken(DISCORD_CLIENT_TOKEN);
-      const body = commands.map(({ command }) => command);
-      await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
-        body,
-      });
-
-      console.log('✅ Successfully registered application commands!');
-      resolve();
-    } catch (error) {
-      console.error(error);
-      reject();
+const DISCORD_CLIENT_TOKEN = (() => {
+  if (NODE_ENV === 'production') {
+    if (PROD_TOKEN) {
+      return PROD_TOKEN;
+    } else {
+      throw new Error('Missing PROD_TOKEN in .env file.');
     }
+  }
+
+  if (DEV_TOKEN) {
+    return DEV_TOKEN;
+  } else {
+    throw new Error('DEV_TOKEN missing in .env file.');
+  }
+})();
+
+const registerDiscordCommands = async () => {
+  console.log('Attempting to register application commands...');
+
+  const rest = new REST({ version: '9' }).setToken(DISCORD_CLIENT_TOKEN);
+
+  // TODO: Why does this fail?!
+  // @ts-ignore
+  await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
+    body: commands.map(({ command }) => command),
   });
 
-const onInteractionCreate = async (interaction) => {
+  console.log('✅ Successfully registered application commands!');
+};
+
+const onInteractionCreate = async (interaction: Interaction) => {
+  if (!interaction.isCommand()) {
+    return;
+  }
+
   const command = commands.find(
     ({ command }) => command.name === interaction.commandName
   );
@@ -65,9 +69,10 @@ const onInteractionCreate = async (interaction) => {
     if (Array.isArray(commandResult)) {
       const [firstReply, ...restReplies] = commandResult;
       await interaction.editReply(firstReply);
-      await Promise.all(
-        restReplies.map(async (reply) => await interaction.followUp(reply))
-      );
+
+      for (const reply of restReplies) {
+        await interaction.followUp(reply);
+      }
     } else {
       await interaction.editReply(commandResult);
     }
@@ -77,7 +82,7 @@ const onInteractionCreate = async (interaction) => {
 };
 
 const loginDiscordClient = () =>
-  new Promise((resolve, reject) => {
+  new Promise<void>((resolve, reject) => {
     try {
       console.log('Attempting to login Discord client...');
 
