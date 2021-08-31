@@ -10,6 +10,8 @@ const name = 'weather';
 const description = 'Sends the weather for a given city';
 
 const callback = async (interaction: Interaction) => {
+  if (!interaction.isCommand()) throw new Error('Not a command.');
+
   const city = interaction.options.get('city')!.value;
   try {
     const { data } = await axios.get(
