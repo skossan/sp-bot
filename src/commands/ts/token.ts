@@ -20,7 +20,7 @@ const callback = (interaction: Interaction) => {
       interaction.user.send(
         `Execute the following command in the root of the project folder:\n\`\`\`echo "\\nDEV_TOKEN=${DEV_TOKEN} \\\n\\nGUILD_ID=${GUILD_ID} \\\n\\nDEV_CLIENT_ID=${DEV_CLIENT_ID}" >> .env\`\`\``
       );
-      interaction.user.send(`Optional keys you can add to your .env file: 
+      interaction.user.send(`Optional keys you can add to your .env file:
 *WEATHER_API_KEY=587b112b73d3331d7bbfd7247516e478*
       `);
 
