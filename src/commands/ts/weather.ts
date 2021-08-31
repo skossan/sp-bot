@@ -12,7 +12,13 @@ const description = 'Sends the weather for a given city';
 const callback = async (interaction: Interaction) => {
   if (!interaction.isCommand()) throw new Error('Not a command.');
 
-  const city = interaction.options.get('city')!.value;
+  const userInput = interaction.options.get('city')!.value as string;
+  const userInputToLowerCase = userInput.toLowerCase();
+  const city = userInputToLowerCase
+    .replace(/[^a-zA-Z0-9]/g, '')
+    .replace(/[\ö]/g, 'o')
+    .replace(/[\å\ä]/g, 'a');
+
   try {
     const { data } = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&APPID=${WEATHER_API_KEY}`
@@ -22,9 +28,13 @@ const callback = async (interaction: Interaction) => {
 
     const weatherCondition = data.weather[0].description;
 
-    return `The current temperature in *${city}* is *${temp}* °C and the current weather condition is *${weatherCondition}*`;
+    return `The current temperature in *${userInput}* is *${temp}* °C and the current weather condition is *${weatherCondition}*`;
   } catch (error) {
-    return `Something went wrong 😢`;
+    if (error.response.data.message == 'city not found') {
+      return `Could not find city *${city}*`;
+    } else {
+      return `Something went wrong 😢`;
+    }
   }
 };
 
