@@ -15,9 +15,11 @@ const callback = async (interaction: Interaction) => {
   const userInput = interaction.options.get('city')!.value as string;
   const userInputToLowerCase = userInput.toLowerCase();
   const city = userInputToLowerCase
-    .replace(/[^a-zA-Z0-9]/g, '')
     .replace(/[\ö]/g, 'o')
-    .replace(/[\å\ä]/g, 'a');
+    .replace(/[\ñ]/g, 'n')
+    .replace(/[\ü]/g, 'u')
+    .replace(/[\å\ä\ã\á]/g, 'a')
+    .replace(/[^a-zA-Z0-9\ ]/g, '');
 
   try {
     const { data } = await axios.get(
