@@ -30,7 +30,7 @@ const callback = async (interaction: Interaction) => {
       ` and the current weather condition is *${weatherCondition}*`
     );
   } catch (error) {
-    // If the city is not found, sends an error message. Users cannot user Å, Ä and Ö.
+    // If the city is not found, sends an error message. Users cannot use Å, Ä and Ö.
     return `Could not find weather data for *${city}* 😢 *Try again without using Å, Ä and Ö* `;
   }
 };
