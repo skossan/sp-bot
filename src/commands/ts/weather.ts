@@ -31,7 +31,7 @@ const callback = async (interaction: Interaction) => {
     const weatherCondition = data.weather[0].description;
 
     return `The current temperature in *${userInput}* is *${temp}* °C and the current weather condition is *${weatherCondition}*`;
-  } catch (error) {
+  } catch (error: any) {
     if (error.response.data.message == 'city not found') {
       return `Could not find city *${city}*`;
     } else {
