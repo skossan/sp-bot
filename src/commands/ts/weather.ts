@@ -13,25 +13,36 @@ const callback = async (interaction: Interaction) => {
   if (!interaction.isCommand()) throw new Error('Not a command.');
 
   const userInput = interaction.options.get('city')!.value as string;
-  const city = encodeURIComponent(userInput)
+  const city = encodeURIComponent(userInput);
   try {
-
-
     const { data } = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&APPID=${WEATHER_API_KEY}`
     );
 
-    const temp = data.main.temp;
+    const temp = Math.round(data.main.temp);
 
     const weatherCondition = data.weather[0].description;
 
     return `The current temperature in *${userInput}* is *${temp}* °C and the current weather condition is *${weatherCondition}*`;
-  } catch (error) {
-    if (error.response.data.message == 'city not found') {
-      return `Could not find city *${city}*`;
-    } else {
-      return `Something went wrong 😢`;
+  } catch (error: unknown) {
+    if (!axios.isAxiosError(error)) {
+      return 'Something went wrong 😢';
     }
+
+    const { message } = error;
+
+    if (message === 'city not found') {
+      return `Could not find city *${city}*`;
+    }
+
+    if (
+      message ===
+      'Invalid API key. Please see http://openweathermap.org/faq#error401 for more info.'
+    ) {
+      return 'Missing API key 😢';
+    }
+
+    return 'Something went wrong 😢';
   }
 };
 
