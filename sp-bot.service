@@ -3,7 +3,7 @@ Description=Svensk programmering Discord bot
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/node /home/pi/sp-bot/dist
+ExecStart=/usr/local/bin/npm run start:prod --prefix /home/pi/sp-bot/
 WorkingDirectory=/home/pi/sp-bot
 StandardOutput=inherit
 StandardError=inherit
