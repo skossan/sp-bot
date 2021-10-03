@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ApplicationCommandOptionType } from 'discord-api-types/v9';
 import { Interaction } from 'discord.js';
 import { ICommand, IOption } from '../commands';
