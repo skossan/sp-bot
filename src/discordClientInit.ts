@@ -63,6 +63,8 @@ const registerDiscordCommands = async () => {
 };
 
 const onInteractionCreate = async (interaction: Interaction) => {
+  console.log(interaction);
+
   if (!interaction.isCommand()) {
     return;
   }
@@ -116,6 +118,12 @@ const loginDiscordClient = () =>
       });
 
       client.on('interactionCreate', onInteractionCreate);
+
+      client.on('messageCreate', (message) => {
+        message.channel.messages.fetch('890577388042334259').then((data) => {
+          console.log(`Replied to ${data}`);
+        });
+      });
     } catch (error) {
       console.error(error);
       reject();

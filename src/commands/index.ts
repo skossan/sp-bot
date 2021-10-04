@@ -5,9 +5,18 @@ import banana from './ts/banana';
 import whatIs from './ts/whatIs';
 import token from './ts/token';
 import weather from './ts/weather';
+import systembolaget from './ts/systembolaget';
+
 import { ICommand } from './commands';
 
-const tsCommands: ICommand[] = [joke, banana, whatIs, token, weather];
+const tsCommands: ICommand[] = [
+  joke,
+  banana,
+  whatIs,
+  token,
+  weather,
+  systembolaget,
+];
 
 const jsCommands: ICommand[] = [pear, whoAmI];
 
