@@ -16,7 +16,9 @@ const callback = async (interaction: Interaction) => {
       return 'Write a word after "wiki". For example: "wiki grapes".';
     }
 
-    const search_url = `https://en.wikipedia.org/wiki/${term}`;
+    const search_url = `https://en.wikipedia.org/wiki/${encodeURIComponent(
+      term
+    )}`;
 
     return search_url;
   } catch (e) {
