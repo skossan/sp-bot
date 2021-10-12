@@ -2,9 +2,6 @@ import { ApplicationCommandOptionType } from 'discord-api-types/v9';
 import { Interaction } from 'discord.js';
 import { ICommand, IOption } from '../commands';
 import axios from 'axios';
-import puppeteer from 'puppeteer';
-
-const { STOCK_API_KEY } = process.env;
 
 const name = 'stock';
 
@@ -22,13 +19,13 @@ const callback = async (interaction: Interaction) => {
 
     const url = `https://www.avanza.se/_cqbe/search/global-search/global-search-template?query=${term}`;
 
-    const data = await axios.get(url);
+    const { data } = await axios.get(url);
 
-    const name = data.data.resultGroups[0].hits[0].link.linkDisplay;
-    const price = data.data.resultGroups[0].hits[0].lastPrice;
-    const currency = data.data.resultGroups[0].hits[0].currency;
+    const name = data.resultGroups[0].hits[0].link.linkDisplay;
+    const price = data.resultGroups[0].hits[0].lastPrice;
+    const currency = data.resultGroups[0].hits[0].currency;
 
-    const response = `${name} ${price} ${currency}`;
+    const response = `${name} - ${price}${currency}`;
 
     return response;
   } catch (e) {
