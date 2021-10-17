@@ -14,20 +14,23 @@ const callback = async (interaction: Interaction) => {
     const term = interaction.options.get('word')!.value;
 
     if (!term) {
-      return 'Write a stock name after "stock". For example: "stock tesla".';
+      return 'Write a stock name after "stock". For example: "/stock tesla".';
     }
 
     const url = `https://www.avanza.se/_cqbe/search/global-search/global-search-template?query=${term}`;
 
     const { data } = await axios.get(url);
+    if (data.totalNumberOfHits === 0) {
+      return `Could not find ${term} on the stock market.`;
+    } else {
+      const name = data.resultGroups[0].hits[0].link.linkDisplay;
+      const price = data.resultGroups[0].hits[0].lastPrice;
+      const currency = data.resultGroups[0].hits[0].currency;
 
-    const name = data.resultGroups[0].hits[0].link.linkDisplay;
-    const price = data.resultGroups[0].hits[0].lastPrice;
-    const currency = data.resultGroups[0].hits[0].currency;
+      const response = `${name} - ${price}${currency}`;
 
-    const response = `${name} - ${price}${currency}`;
-
-    return response;
+      return response;
+    }
   } catch (e) {
     return `Something went wrong. Sorry 😢`;
   }
