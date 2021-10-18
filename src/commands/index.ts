@@ -6,9 +6,18 @@ import whatIs from './ts/whatIs';
 import token from './ts/token';
 import weather from './ts/weather';
 import wiki from './ts/wiki';
+import stock from './ts/stock';
 import { ICommand } from './commands';
 
-const tsCommands: ICommand[] = [joke, banana, whatIs, token, weather, wiki];
+const tsCommands: ICommand[] = [
+  joke,
+  banana,
+  whatIs,
+  token,
+  weather,
+  wiki,
+  stock,
+];
 
 const jsCommands: ICommand[] = [pear, whoAmI];
 
